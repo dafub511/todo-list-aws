@@ -32,7 +32,7 @@ class TestApi(unittest.TestCase):
         response = requests.post(url, data=json.dumps(data))
         json_response = response.json()
         print('Response Add Todo: '+ str(json_response))
-        jsonbody= json.loads(json_response['body'])
+        jsonbody= json_response
         ID_TODO = jsonbody['id']
         print ('ID todo:'+ID_TODO)
         self.assertEqual(
@@ -60,9 +60,8 @@ class TestApi(unittest.TestCase):
         }
         response = requests.post(url, data=json.dumps(data))
         json_response = response.json()
-        print('Response Add Todo: {}'.format(json_response['body']))
-        print('Response Add Todo: {}'.format(json_response['body']))
-        jsonbody= json.loads(json_response['body'])
+        print('Response Add Todo: {}'.format(json_response))
+        jsonbody= json_response
         ID_TODO = jsonbody['id']
         print ('ID todo:'+ID_TODO)
         self.assertEqual(
@@ -88,7 +87,7 @@ class TestApi(unittest.TestCase):
         response = requests.post(url, data=json.dumps(data))
         json_response = response.json()
         print('Response Add Todo: '+ str(json_response))
-        jsonbody= json.loads(json_response.get('body', ''))
+        jsonbody = json_response.get('body', '')
         ID_TODO = jsonbody['id']
         print ('ID todo:'+ID_TODO)
         self.assertEqual(
@@ -125,8 +124,8 @@ class TestApi(unittest.TestCase):
         }
         response = requests.post(url, data=json.dumps(data))
         json_response = response.json()
-        print('Response Add todo: ' + json_response['body'])
-        jsonbody= json.loads(json_response['body'])
+        print('Response Add todo: ' + str(json_response))
+        jsonbody= json_response
         ID_TODO = jsonbody['id']
         print ('ID todo:'+ID_TODO)
         self.assertEqual(
@@ -178,8 +177,8 @@ class TestApi(unittest.TestCase):
         }
         response = requests.post(url, data=json.dumps(data))
         json_response = response.json()
-        print('Response Add todo: ' + json_response['body'])
-        jsonbody= json.loads(json_response['body'])
+        print('Response Add todo: ' + str(json_response))
+        jsonbody= json_response
         ID_TODO = jsonbody['id']
         print ('ID todo:'+ID_TODO)
         self.assertEqual(
