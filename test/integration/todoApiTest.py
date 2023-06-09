@@ -88,7 +88,7 @@ class TestApi(unittest.TestCase):
         json_response = response.json()
         print('Response Add Todo: '+ str(json_response))
         jsonbody = json_response.get('body', '')
-        ID_TODO = jsonbody['id']
+        ID_TODO = json_response['id']
         print ('ID todo:'+ID_TODO)
         self.assertEqual(
             response.status_code, 200, "Error en la petición API a {url}"
