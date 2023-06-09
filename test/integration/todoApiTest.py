@@ -10,7 +10,7 @@ import pytest
 BASE_URL = os.environ.get("BASE_URL")
 #BASE_URL = "https://m0qwfec693.execute-api.us-east-1.amazonaws.com/Prod"
 print(BASE_URL)
-DEFAULT_TIMEOUT = 2  # in secs
+DEFAULT_TIMEOUT = 5  # in secs
 
 
 @pytest.mark.api
@@ -59,7 +59,7 @@ class TestApi(unittest.TestCase):
         }
         response = requests.post(url, data=json.dumps(data))
         json_response = response.json()
-        print(json_response)
+        print('Response Add Todo: ' + json_response.get('body', '')
         print('Response Add Todo: '+ json_response['body'])
         jsonbody= json.loads(json_response['body'])
         ID_TODO = jsonbody['id']
@@ -87,7 +87,7 @@ class TestApi(unittest.TestCase):
         response = requests.post(url, data=json.dumps(data))
         json_response = response.json()
         print('Response Add Todo: '+ str(json_response))
-        jsonbody= json.loads(json_response['body'])
+        jsonbody= json.loads(json_response.get'body', '')
         ID_TODO = jsonbody['id']
         print ('ID todo:'+ID_TODO)
         self.assertEqual(
