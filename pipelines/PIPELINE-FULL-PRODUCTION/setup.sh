@@ -8,4 +8,5 @@ python3.7 -m pip install awscli
 ##python3.7 -m pip install aws-sam-cli
 # For integration testing
 python3.7 -m pip install pytest
+python3.7 -m pip install requests
 pwd
