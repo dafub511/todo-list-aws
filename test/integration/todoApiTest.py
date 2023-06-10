@@ -1,3 +1,4 @@
+##DUB
 import http.client
 import os
 import unittest
@@ -8,7 +9,7 @@ import json
 import pytest
 
 BASE_URL = os.environ.get("BASE_URL")
-#BASE_URL = "https://m0qwfec693.execute-api.us-east-1.amazonaws.com/Prod"
+BASE_URL = "https://9o2chw1e2i.execute-api.us-east-1.amazonaws.com/Prod"
 print(BASE_URL)
 DEFAULT_TIMEOUT = 2  # in secs
 
@@ -59,6 +60,7 @@ class TestApi(unittest.TestCase):
         }
         response = requests.post(url, data=json.dumps(data))
         json_response = response.json()
+        print(json_response)
         print('Response Add Todo: '+ json_response['body'])
         jsonbody= json.loads(json_response['body'])
         ID_TODO = jsonbody['id']
@@ -200,3 +202,4 @@ class TestApi(unittest.TestCase):
             response.status_code, 404, "Error en la petición API a {url}"
         )
         print('End - integration test Delete TODO')
+
