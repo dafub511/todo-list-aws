@@ -1,0 +1,6 @@
+{
+  "sam-installation/aws-sam-cli-src/samcli/lib/init/templates/cookiecutter-aws-sam-hello-java-gradle/tests/test_cookiecutter.py": true, 
+  "sam-installation/aws-sam-cli-src/samcli/lib/init/templates/cookiecutter-aws-sam-hello-java-maven/tests/test_cookiecutter.py": true, 
+  "sam-installation/aws-sam-cli-src/samcli/lib/init/templates/cookiecutter-aws-sam-hello-python/{{cookiecutter.project_name}}/tests/unit/test_handler.py": true, 
+  "test/integration/todoApiTest.py": true
+}

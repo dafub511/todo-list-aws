@@ -12,6 +12,7 @@ def create(event, context):
     # create a response
     response = {
         "statusCode": 200,
+       
         "body": json.dumps(item)
     }
     return response
