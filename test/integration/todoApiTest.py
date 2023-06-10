@@ -3,13 +3,14 @@ import http.client
 import os
 import unittest
 from urllib.request import urlopen
+import pytest
 import requests
 import json
 
-import pytest
+
 
 BASE_URL = os.environ.get("BASE_URL")
-BASE_URL = "https://9o2chw1e2i.execute-api.us-east-1.amazonaws.com/Prod"
+BASE_URL = "https://jjcb0j6rx6.execute-api.us-east-1.amazonaws.com/Prod"
 print(BASE_URL)
 DEFAULT_TIMEOUT = 2  # in secs
 
