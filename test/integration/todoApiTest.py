@@ -2,10 +2,11 @@ import http.client
 import os
 import unittest
 from urllib.request import urlopen
+import pytest
 import requests
 import json
 
-import pytest
+
 
 BASE_URL = os.environ.get("BASE_URL")
 BASE_URL = "https://jjcb0j6rx6.execute-api.us-east-1.amazonaws.com/Prod"
