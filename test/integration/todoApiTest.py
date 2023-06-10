@@ -2,7 +2,7 @@ import http.client
 import os
 import unittest
 from urllib.request import urlopen
-import requests
+##import requests
 import json
 
 import pytest
