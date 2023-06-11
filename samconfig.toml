@@ -8,7 +8,7 @@ region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
 parameter_overrides = "Stage=\"default\""
 image_repositories = []
-confirm_chageset = true
+confirm_changeset = true
 
 
 [staging]
