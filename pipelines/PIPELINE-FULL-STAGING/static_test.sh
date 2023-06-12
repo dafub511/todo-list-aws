@@ -27,3 +27,6 @@ if [[ $? -ne 0 ]]
 then
     exit 1
 fi
+##Calculo de la complejidad ciclomatica del codigo.
+radon cc scr -nc 
+exit 0
