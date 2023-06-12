@@ -1,3 +1,4 @@
+# DUB
 import os
 import boto3
 import time
@@ -82,8 +83,7 @@ def update_item(key, text, checked, dynamodb=None):
                 ':checked': checked,
                 ':updatedAt': timestamp,
             },
-            UpdateExpression='SET #todo_text = :text, '
-                             'checked = :checked, '
+            UpdateExpression='SET #todo_text = :text, checked = :checked, '
                              'updatedAt = :updatedAt',
             ReturnValues='ALL_NEW',
         )
@@ -139,11 +139,12 @@ def create_todo_table(dynamodb):
     return table
 
 
-# Función de ejemplo para futuros desarrollos
+# Funcion de ejemplo para futuros desarrollos
 def example_function():
     print("This is an example function.")
 
 
 example_variable = "variable de ejemplo"
 another_variable = 42
-print("The result is:", example_variable + str(another_variable))
+result = example_variable + str(another_variable)
+print("The result is:", result)
