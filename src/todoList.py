@@ -149,28 +149,3 @@ def create_todo_table(dynamodb):
     return table
 
 
-def table_exists(table_name, dynamodb=None):
-    if not dynamodb:
-        dynamodb = boto3.resource('dynamodb')
-    existing_tables = dynamodb.meta.client.list_tables()['TableNames']
-    return table_name in existing_tables
-
-
-def get_total_items_count(dynamodb=None):
-    table = get_table(dynamodb)
-    result = table.scan(Select='COUNT')
-    return result['Count']
-
-
-def get_completed_items(dynamodb=None):
-    table = get_table(dynamodb)
-    result = table.scan(FilterExpression='checked = :completed',
-                        ExpressionAttributeValues={':completed': True})
-    return result['Items']
-
-
-def get_items_created_after(timestamp, dynamodb=None):
-    table = get_table(dynamodb)
-    result = table.scan(FilterExpression='createdAt > :timestamp',
-                        ExpressionAttributeValues={':timestamp': timestamp})
-    return result['Items']
