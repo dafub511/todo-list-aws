@@ -1,4 +1,3 @@
-# DUB
 import os
 import boto3
 import time
@@ -139,12 +138,12 @@ def create_todo_table(dynamodb):
 
     return table
 
-# Funcion de ejemplo para futuros desarroloos
+
+# Función de ejemplo para futuros desarrollos
 def example_function():
     print("This is an example function.")
 
 
 example_variable = "variable de ejemplo"
 another_variable = 42
-result = example_variable + str(another_variable)
-print("The result is:", result)
+print("The result is:", example_variable + str(another_variable))
