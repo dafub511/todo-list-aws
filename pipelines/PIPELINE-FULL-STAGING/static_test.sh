@@ -27,3 +27,22 @@ if [[ $? -ne 0 ]]
 then
     exit 1
 fi
+##Calculo de la complejidad ciclomatica del codigo.
+CC=$(radon cc -a src | awk '{sum+=$2}END{print sum/NR}')
+
+if (( $(echo "$CC <= 5" | bc -l) )); then
+    echo "Calidad del código: A"
+elif (( $(echo "$CC <= 10" | bc -l) )); then
+    echo "Calidad del código: B"
+elif (( $(echo "$CC <= 15" | bc -l) )); then
+    echo "Calidad del código: C"
+elif (( $(echo "$CC <= 20" | bc -l) )); then
+    echo "Calidad del código: D"
+elif (( $(echo "$CC <= 25" | bc -l) )); then
+    echo "Calidad del código: E"
+else
+    echo "Calidad del código: F"
+fi
+
+
+exit 0
