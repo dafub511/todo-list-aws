@@ -1,4 +1,4 @@
-##DUB
+# DUB
 import os
 import boto3
 import time
@@ -139,7 +139,7 @@ def create_todo_table(dynamodb):
 
     return table
 
-##Funcion de ejemplo para futuros desarroloos
+# Funcion de ejemplo para futuros desarroloos
 def example_function():
     print("This is an example function.")
 
