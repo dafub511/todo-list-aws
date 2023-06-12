@@ -47,7 +47,8 @@ class TestDatabaseFunctions(unittest.TestCase):
 
     def test_put_todo_error(self):
         from src.todoList import put_item
-        self.assertRaises(Exception, put_item, "", self.dynamodb)
+        with self.assertRaises(Exception):
+            put_item("", self.dynamodb)
 
     def test_get_todo(self):
         from src.todoList import get_item, put_item
@@ -75,9 +76,12 @@ class TestDatabaseFunctions(unittest.TestCase):
         from src.todoList import put_item, update_item
         updated_text = "Aprender más cosas que DevOps y Cloud en la UNIR"
         responsePut = put_item(self.text, self.dynamodb)
-        self.assertRaises(Exception, update_item, updated_text, "", "false", self.dynamodb)
-        self.assertRaises(TypeError, update_item, "", self.uuid, "false", self.dynamodb)
-        self.assertRaises(Exception, update_item, updated_text, self.uuid, "", self.dynamodb)
+        with self.assertRaises(Exception):
+            update_item(updated_text, "", "false", self.dynamodb)
+        with self.assertRaises(TypeError):
+            update_item("", self.uuid, "false", self.dynamodb)
+        with self.assertRaises(Exception):
+            update_item(updated_text, self.uuid, "", self.dynamodb)
 
     def test_delete_todo(self):
         from src.todoList import delete_item, put_item, get_items
@@ -88,8 +92,8 @@ class TestDatabaseFunctions(unittest.TestCase):
 
     def test_delete_todo_error(self):
         from src.todoList import delete_item
-        self.assertRaises(TypeError, delete_item, "", self.dynamodb)
+        with self.assertRaises(TypeError):
+            delete_item("", self.dynamodb)
 
 if __name__ == '__main__':
     unittest.main()
-
