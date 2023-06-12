@@ -11,9 +11,10 @@ def get_table(dynamodb=None):
     if not dynamodb:
         URL = os.environ['ENDPOINT_OVERRIDE']
         if URL:
-            print('URL dynamoDB:' + URL)
+            print('URL dynamoDB:'+URL)
             boto3.client = functools.partial(boto3.client, endpoint_url=URL)
-            boto3.resource = functools.partial(boto3.resource, endpoint_url=URL)
+            boto3.resource = functools.partial(boto3.resource,
+                                               endpoint_url=URL)
         dynamodb = boto3.resource("dynamodb")
     # fetch todo from the database
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
@@ -32,7 +33,7 @@ def get_item(key, dynamodb=None):
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
-        print('Result getItem:' + str(result))
+        print('Result getItem:'+str(result))
         if 'Item' in result:
             return result['Item']
 
@@ -80,12 +81,12 @@ def update_item(key, text, checked, dynamodb=None):
                 'id': key
             },
             ExpressionAttributeNames={
-                '#todo_text': 'text',
+              '#todo_text': 'text',
             },
             ExpressionAttributeValues={
-                ':text': text,
-                ':checked': checked,
-                ':updatedAt': timestamp,
+              ':text': text,
+              ':checked': checked,
+              ':updatedAt': timestamp,
             },
             UpdateExpression='SET #todo_text = :text, '
                              'checked = :checked, '
@@ -141,34 +142,7 @@ def create_todo_table(dynamodb):
 
     # Wait until the table exists.
     table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
-    if table.table_status != 'ACTIVE':
+    if (table.table_status != 'ACTIVE'):
         raise AssertionError()
 
     return table
-
-
-def table_exists(table_name, dynamodb=None):
-    if not dynamodb:
-        dynamodb = boto3.resource('dynamodb')
-    existing_tables = dynamodb.meta.client.list_tables()['TableNames']
-    return table_name in existing_tables
-
-
-def get_total_items_count(dynamodb=None):
-    table = get_table(dynamodb)
-    result = table.scan(Select='COUNT')
-    return result['Count']
-
-
-def get_completed_items(dynamodb=None):
-    table = get_table(dynamodb)
-    result = table.scan(FilterExpression='checked = :completed',
-                        ExpressionAttributeValues={':completed': True})
-    return result['Items']
-
-
-def get_items_created_after(timestamp, dynamodb=None):
-    table = get_table(dynamodb)
-    result = table.scan(FilterExpression='createdAt > :timestamp',
-                        ExpressionAttributeValues={':timestamp': timestamp})
-    return result['Items']
