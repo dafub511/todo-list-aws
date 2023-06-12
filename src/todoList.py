@@ -142,32 +142,7 @@ def create_todo_table(dynamodb):
 
     # Wait until the table exists.
     table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
-    if table.table_status != 'ACTIVE':
+    if (table.table_status != 'ACTIVE'):
         raise AssertionError()
 
     return table
-
-
-# Agregar líneas adicionales a continuación
-
-# Llamada a la función get_items() y mostrar los resultados
-items = get_items()
-print("Items:")
-for item in items:
-    print(item)
-
-# Llamada a la función put_item() para agregar un nuevo elemento
-new_item = put_item("New Todo Item")
-print("New Item:", new_item)
-
-# Llamada a la función update_item() para actualizar un elemento existente
-updated_item = update_item("item_id", "Updated Todo Item", True)
-print("Updated Item:", updated_item)
-
-# Llamada a la función delete_item() para eliminar un elemento
-delete_item("item_id")
-print("Item deleted")
-
-# Llamada a la función create_todo_table() para crear una nueva tabla
-new_table = create_todo_table(dynamodb)
-print("New Table:", new_table)
