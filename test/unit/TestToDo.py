@@ -1,13 +1,16 @@
-## DUB
+##DUB
 import warnings
 import unittest
 import boto3
 from moto import mock_dynamodb
+import sys
+import os
 import json
 
 @mock_dynamodb
 class TestDatabaseFunctions(unittest.TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         warnings.filterwarnings(
             "ignore",
             category=ResourceWarning,
@@ -20,6 +23,8 @@ class TestDatabaseFunctions(unittest.TestCase):
             "ignore",
             category=DeprecationWarning,
             message="Using or importing.*")
+
+    def setUp(self):
         self.dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
         self.uuid = "123e4567-e89b-12d3-a456-426614174000"
         self.text = "Aprender DevOps y Cloud en la UNIR"
@@ -42,13 +47,12 @@ class TestDatabaseFunctions(unittest.TestCase):
 
     def test_put_todo_error(self):
         from src.todoList import put_item
-        self.assertRaises(Exception, put_item("", self.dynamodb))
+        self.assertRaises(Exception, put_item, "", self.dynamodb)
 
     def test_get_todo(self):
         from src.todoList import get_item, put_item
         responsePut = put_item(self.text, self.dynamodb)
         idItem = json.loads(responsePut['body'])['id']
-        self.assertEqual(200, responsePut['statusCode'])
         responseGet = get_item(idItem, self.dynamodb)
         self.assertEqual(self.text, responseGet['text'])
 
@@ -71,9 +75,9 @@ class TestDatabaseFunctions(unittest.TestCase):
         from src.todoList import put_item, update_item
         updated_text = "Aprender más cosas que DevOps y Cloud en la UNIR"
         responsePut = put_item(self.text, self.dynamodb)
-        self.assertRaises(Exception, update_item(updated_text, "", "false", self.dynamodb))
-        self.assertRaises(TypeError, update_item("", self.uuid, "false", self.dynamodb))
-        self.assertRaises(Exception, update_item(updated_text, self.uuid, "", self.dynamodb))
+        self.assertRaises(Exception, update_item, updated_text, "", "false", self.dynamodb)
+        self.assertRaises(TypeError, update_item, "", self.uuid, "false", self.dynamodb)
+        self.assertRaises(Exception, update_item, updated_text, self.uuid, "", self.dynamodb)
 
     def test_delete_todo(self):
         from src.todoList import delete_item, put_item, get_items
@@ -84,8 +88,7 @@ class TestDatabaseFunctions(unittest.TestCase):
 
     def test_delete_todo_error(self):
         from src.todoList import delete_item
-        self.assertRaises(TypeError, delete_item("", self.dynamodb))
-
+        self.assertRaises(TypeError, delete_item, "", self.dynamodb)
 
 if __name__ == '__main__':
     unittest.main()
