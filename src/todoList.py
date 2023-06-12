@@ -1,3 +1,4 @@
+##DUB
 import os
 import boto3
 import time
@@ -15,7 +16,6 @@ def get_table(dynamodb=None):
             boto3.client = functools.partial(boto3.client, endpoint_url=URL)
             boto3.resource = functools.partial(boto3.resource, endpoint_url=URL)
         dynamodb = boto3.resource("dynamodb")
-    # fetch todo from the database
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
     return table
 
@@ -39,7 +39,6 @@ def get_item(key, dynamodb=None):
 
 def get_items(dynamodb=None):
     table = get_table(dynamodb)
-    # fetch todo from the database
     result = table.scan()
     return result['Items']
 
@@ -56,9 +55,7 @@ def put_item(text, dynamodb=None):
         'updatedAt': timestamp,
     }
     try:
-        # write the todo to the database
         table.put_item(Item=item)
-        # create a response
         response = {
             "statusCode": 200,
             "body": json.dumps(item)
@@ -73,7 +70,6 @@ def put_item(text, dynamodb=None):
 def update_item(key, text, checked, dynamodb=None):
     table = get_table(dynamodb)
     timestamp = int(time.time() * 1000)
-    # update the todo in the database
     try:
         result = table.update_item(
             Key={
@@ -101,7 +97,6 @@ def update_item(key, text, checked, dynamodb=None):
 
 def delete_item(key, dynamodb=None):
     table = get_table(dynamodb)
-    # delete the todo from the database
     try:
         table.delete_item(
             Key={
@@ -116,7 +111,6 @@ def delete_item(key, dynamodb=None):
 
 
 def create_todo_table(dynamodb):
-    # For unit testing
     tableName = os.environ['DYNAMODB_TABLE']
     print('Creating Table with name:' + tableName)
     table = dynamodb.create_table(
@@ -139,19 +133,18 @@ def create_todo_table(dynamodb):
         }
     )
 
-    # Wait until the table exists.
     table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
     if table.table_status != 'ACTIVE':
         raise AssertionError()
 
     return table
 
-
-# Líneas adicionales
+##Funcion de ejemplo para futuros desarroloos
 def example_function():
     print("This is an example function.")
-    # Puedes agregar más lógica o funcionalidades aquí
 
 
-# Línea adicional
-example_variable = "This is an example variable"
+example_variable = "variable de ejemplo"
+another_variable = 42
+result = example_variable + str(another_variable)
+print("The result is:", result)
